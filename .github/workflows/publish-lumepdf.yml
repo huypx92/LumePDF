@@ -1,0 +1,64 @@
+name: Publish LumePDF release
+
+on:
+  push:
+    branches: [main]
+    paths: [release-version.txt]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lumepdf-release
+
+jobs:
+  publish:
+    if: github.repository == 'huypx92/LumePDF' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Verify package and publish
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          version=$(tr -d '\r\n' < release-version.txt)
+          if [[ ! "$version" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+            echo 'release-version.txt must contain a stable version such as 1.0.2.' >&2
+            exit 1
+          fi
+          tag="v$version"
+          zip="LumePDF-$version.zip"
+          checksum="LumePDF-$version.sha256"
+          digest=$(awk 'NR == 1 {print $1}' "$checksum")
+          [[ "$digest" =~ ^[a-fA-F0-9]{64}$ ]]
+          printf '%s  %s\n' "$digest" "$zip" | sha256sum --check --strict
+          unzip -tq "$zip"
+
+          published=$(gh release list --repo "$GITHUB_REPOSITORY" --limit 100 --exclude-drafts --exclude-pre-releases --json tagName --jq '.[].tagName')
+          if grep -Fxq "$tag" <<< "$published"; then
+            echo "$tag is already published."
+            exit 0
+          fi
+          highest=$(printf '%s\n' "$published" "$tag" | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -1)
+          if [[ "$highest" != "$tag" ]]; then
+            echo "Refusing to mark $tag latest because $highest is newer." >&2
+            exit 1
+          fi
+
+          notes="LumePDF-$version.release.md"
+          if [[ ! -f "$notes" ]]; then
+            notes=$(mktemp)
+            printf 'LumePDF %s for Windows and macOS. See START_HERE.txt inside the ZIP.\n' "$version" > "$notes"
+          fi
+          if ! gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create "$tag" --repo "$GITHUB_REPOSITORY" --draft --target "$GITHUB_SHA" \
+              --title "LumePDF $version — Windows & macOS" --notes-file "$notes"
+          fi
+          gh release upload "$tag" "$zip" "$checksum" --repo "$GITHUB_REPOSITORY" --clobber
+          gh release edit "$tag" --repo "$GITHUB_REPOSITORY" --draft=false --latest
