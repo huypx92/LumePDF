@@ -1,4 +1,4 @@
-# LumePDF 1.0.0
+# LumePDF
 
 A lightweight desktop PDF viewer for browsing documents, checking colors and exporting pages as images.
 
@@ -7,6 +7,10 @@ Developed by **Huy cola**. Contact: **huypx92@gmail.com**.
 ![LumePDF cover](lumepdf-cover.png)
 
 ## Downloads
+
+**[Download the latest LumePDF release](https://github.com/huypx92/LumePDF/releases/latest)** for Windows and macOS. Starting with 1.0.1, LumePDF checks for updates at launch and offers a manual check in About.
+
+### Original 1.0.0 package
 
 - [LumePDF-1.0.0.zip](LumePDF-1.0.0.zip) — complete Windows and macOS package with an additional bilingual start guide. Open the file page and choose **Download raw file**.
 - [LumePDF_Package_Staging.rar](LumePDF_Package_Staging.rar) — the original package, preserved unchanged.
@@ -43,4 +47,8 @@ LumePDF là phần mềm xem PDF, duyệt thư viện ảnh bìa, soi màu và x
 
 ## Package provenance
 
-The original installers and application source were supplied in `LumePDF_Package_Staging`. Application code and installers were not modified while preparing these distribution assets. No new open-source license is granted by this repository; third-party components remain subject to their respective licenses.
+The original installers and application source were supplied in `LumePDF_Package_Staging`. Application code and installers were not modified while preparing these distribution assets. This repository does not grant a new open-source license; third-party components remain subject to their respective licenses.
+
+## Publishing a release
+
+See [RELEASING.md](RELEASING.md) for packaging and automatic publication.
