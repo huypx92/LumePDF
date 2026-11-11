@@ -1,0 +1,50 @@
+LUMEPDF 1.0.0 — START HERE / BAT DAU TAI DAY
+Developed by Huy cola — huypx92@gmail.com
+
+ENGLISH
+LumePDF is a desktop PDF viewer with PDFium rendering, a cover gallery,
+page thumbnails, zoom, view rotation, color picking and JPG/PNG page export.
+The interface includes Vietnamese, English, Chinese, Japanese, Korean,
+French, Spanish and Russian.
+
+WINDOWS
+1. Extract the ZIP completely.
+2. Open the window folder.
+3. Most current Windows 10/11 PCs: use LumePDF_Setup_64bit_x64.exe.
+4. For 32-bit Windows: use LumePDF_Setup_32bit_x86.exe.
+5. Follow the installer and read HUONG_DAN_CAI_DAT_WINDOWS.txt.
+
+MACOS — FIRST INSTALLATION BUILDS FROM SOURCE
+1. Extract the ZIP completely and open the Mac folder.
+2. This package contains source code and PDFium libraries for Apple Silicon
+   and Intel. It does not contain a prebuilt native LumePDF executable.
+3. Install Apple's Xcode Command Line Tools if they are not already available.
+4. Internet access is required for the first build. The supplied installation
+   script installs Rust with rustup if Cargo is missing and downloads the
+   dependencies required to compile LumePDF.
+5. Read Mac/HUONG_DAN_CAI_DAT_MAC.txt and Install_LumePDF_Mac.command before
+   running the installer. It builds for the current Mac and installs into
+   /Applications/LumePDF.app, replacing a previous copy at that location.
+6. The supplied script also clears extended attributes from the installed app.
+   Only run it if you trust this package. No macOS runtime test was performed
+   as part of preparing this release.
+
+NOTES
+CMYK preview is an approximation for visual inspection. Actual printed color
+depends on printer, paper, ink and profiles. LumePDF is a viewer; PDF text
+editing, OCR, merging and digital signing are not advertised in this release.
+
+TIENG VIET
+LumePDF la trinh xem PDF tren may tinh, co thu vien anh bia, thumbnail trang,
+phong to/thu nho, xoay goc xem, lay mau va xuat tung trang thanh JPG/PNG.
+
+Windows: giai nen toan bo, mo thu muc window va chon bo cai 64-bit (x64)
+hoac 32-bit (x86) phu hop. Xem huong dan tieng Viet trong thu muc window.
+
+Mac: ban dong goi nay bien dich tu ma nguon trong lan cai dau, chua co
+san file thuc thi native. Can Internet, Xcode Command Line Tools va Rust.
+Script se cai Rust neu chua co, tai thu vien, bien dich cho chip hien tai,
+thay the /Applications/LumePDF.app cu va xoa extended attributes cua app.
+Doc script va huong dan trong thu muc Mac truoc khi chay.
+
+Ho tro: huypx92@gmail.com
